@@ -7,9 +7,11 @@ println("Original Cucumber JSON PATH: " + fileC)
 def jsonSlurper = new JsonSlurper()
 def jsonfile = jsonSlurper.parse(new File(fileC))
 
-for(step in jsonfile[0].elements[0].steps) {
-  if(step.output.join(",").contains("error_message"))
-  	step.result.status = "failed"
+for(element in jsonfile[0].elements) {
+  for(step in element.steps) {
+    if(step.output.join(",").contains("error_message"))
+      step.result.status = "failed"
+  }
 }
 
 fileCF = System.getProperty("user.dir") + "\\target\\cucumberfinal.json"
