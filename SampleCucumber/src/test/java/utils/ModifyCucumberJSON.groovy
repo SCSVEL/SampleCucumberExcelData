@@ -9,6 +9,9 @@ def jsonfile = jsonSlurper.parse(new File(fileC))
 
 for(element in jsonfile[0].elements) {
   for(step in element.steps) {
+    if(step.output == null) //if didn't report anything
+    	continue;
+    
     if(step.output.join(",").contains("error_message"))
       step.result.status = "failed"
   }
